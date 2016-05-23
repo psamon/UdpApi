@@ -4,6 +4,7 @@
 package com.anz.UdpApi.transform;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import com.anz.UdpApi.transform.pojo.Data;
 import com.anz.UdpApi.transform.pojo.Flow;
 import com.anz.UdpApi.transform.pojo.FlowUDP;
-import com.anz.UdpApi.transform.pojo.NumbersInput;
 
 
 import com.anz.common.cache.impl.CacheHandlerFactory;
@@ -37,6 +37,7 @@ import com.ibm.broker.config.proxy.FlowProxy;
 public class TransformUDPs implements ITransformer<String, String> {
 
 	private static final Logger logger = LogManager.getLogger();
+	private static final int EMPTY = 0;
 	
 	/* (non-Javadoc)
 	 * @see com.anz.common.transform.IJsonJsonTransformer#execute(java.lang.String)
@@ -51,48 +52,86 @@ public class TransformUDPs implements ITransformer<String, String> {
 		// User Code Below
 		
 		// TODO handle naming errors
+		logger.info("json = {}", json.toString());
 		
 		// Create proxies for broker, server and application
 		BrokerProxy brokerProxy = BrokerProxy.getLocalInstance(json.getIntegrationNode());
-		ExecutionGroupProxy serverProxy = brokerProxy.getExecutionGroupByName(json.getIntegrationServer());		
+		logger.info(brokerProxy.toString());
+		ExecutionGroupProxy serverProxy = brokerProxy.getExecutionGroupByName(json.getIntegrationServer());	
+		logger.info(serverProxy.toString());
 		ApplicationProxy applicationProxy = serverProxy.getApplicationByName(json.getApplication());
+		logger.info(applicationProxy.toString());
 		
 		
 		// Create main message flow proxy
 		FlowProxy flowProxy = applicationProxy.getMessageFlowByName(json.getMessageFlow().getFlowName());
+		logger.info(flowProxy.toString());
+		String[] udpNames =  flowProxy.getUserDefinedPropertyNames();
 		
-		// For each main flow UDP
-		for(FlowUDP udp: json.getMessageFlow().getFlowUDPs()){
+		for(String udp: udpNames){
 			
-			// Change UDP value
-			flowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
+			logger.info("UDPS: {}", udp);
 			
 		}
 		
-		// Create list of subflow proxies
-		List<FlowProxy> subflowProxies = new ArrayList<FlowProxy>(json.getSubflows().size());
+		if(json.getMessageFlow().getFlowUDPs() != null){
 		
-		// For each subflow
-		for(Flow flow: json.getSubflows()){
-			
-			// Create subflow proxy
-			FlowProxy newFlowProxy = applicationProxy.getSubFlowByName(flow.getFlowName());
-			
-			// For each UDP
-			for(FlowUDP udp: flow.getFlowUDPs()){
+			// For each main flow UDP
+			for(FlowUDP udp: json.getMessageFlow().getFlowUDPs()){
 				
+				
+				
+				logger.info("new value {} = {}", udp.getName(), udp.getValue());
 				// Change UDP value
-				newFlowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
+				flowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
+				logger.info("new udp {} = {}", udp.getName(), flowProxy.getUserDefinedProperty(udp.getName()));
 				
 			}
 			
-			subflowProxies.add(newFlowProxy);
+		} else {
+			
+			logger.info("No message flow UPDs");
 			
 		}
 		
+		// If subflow list is not empty get data from subflows
+		if(json.getSubflows() != null){
+			
+			// Create list of subflow proxies
+			List<FlowProxy> subflowProxies = new ArrayList<FlowProxy>(json.getSubflows().size());
+						
+			// For each subflow
+			for(Flow flow: json.getSubflows()){
+							
+				// Create subflow proxy
+				FlowProxy newFlowProxy = applicationProxy.getSubFlowByName(flow.getFlowName());
+							
+				// If UDPs list is not empty get UDPs
+				if(flow.getFlowUDPs() != null){
+							
+					// For each UDP
+					for(FlowUDP udp: flow.getFlowUDPs()){
+								
+						// Change UDP value
+						newFlowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
+								
+					}
+							
+					subflowProxies.add(newFlowProxy);
+							
+				} else {
+					
+					logger.info("No UDPs");
+					
+				}
+				
+			}
+			
+		} else {
+			
+			logger.info("No subflows");
 		
-
-		
+		}
 		
 		// End User Code
 		//-----------------------------------------------------------------------------------------

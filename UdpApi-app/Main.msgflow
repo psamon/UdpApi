@@ -19,7 +19,7 @@
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/UdpApi-app/icons/full/obj16/Main.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/UdpApi-app/icons/full/obj30/Main.gif"/>
     <composition>
-      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_35" location="142,-132" javaClass="com.anz.UdpApi.compute.RequestTransformCompute" javaClassLoader="{UdpApi-lib}">
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_35" location="142,-132" javaClass="com.anz.UdpApi.compute.TransformUDPsCompute" javaClassLoader="{UdpApi-lib}">
         <translation xmi:type="utility:ConstantString" string="Update UDPs"/>
         <shortDescription xmi:type="utility:ConstantString" string="User defined Java transformation "/>
         <monitorEvents eventSourceDescription="Out terminal" eventSourceName="Update UDPs.terminal.out" eventIdentity="Update UDPs.OutTerminal">
@@ -35,25 +35,25 @@
         </monitorEvents>
       </nodes>
       <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="10,-131" URLSpecifier="/UdpApi" messageDomainProperty="BLOB">
-        <translation xmi:type="utility:ConstantString" string="HTTP Input"/>
-        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="HTTP Input.terminal.out" eventIdentity="HTTP Input.OutTerminal">
+        <translation xmi:type="utility:ConstantString" string="UDP HTTP Input"/>
+        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="UDP HTTP Input.terminal.out" eventIdentity="UDP HTTP Input.OutTerminal">
           <eventXMLDoc xmi:type="mbmonitor:MonitorEvent">
             <applicationData dataLocation="$LocalEnvironment/HTTP" isXPath="true" complexData="true"/>
             <globalTransactionCorrelator dataLocation="$LocalEnvironment/HTTP/Transaction-Id" eventCorrelation="dataLocation"/>
             <parentTransactionCorrelator/>
             <localTransactionCorrelator/>
             <bitStreamData encoding="base64Binary"/>
-            <eventName literal="HTTP Input.OutTerminal"/>
+            <eventName literal="UDP HTTP Input.OutTerminal"/>
             <eventFilter dataLocation="true()" isXPath="true"/>
           </eventXMLDoc>
         </monitorEvents>
-        <monitorEvents eventSourceDescription="Catch terminal" eventSourceName="HTTP Input.terminal.catch" eventIdentity="HTTP Input.CatchTerminal">
+        <monitorEvents eventSourceDescription="Catch terminal" eventSourceName="UDP HTTP Input.terminal.catch" eventIdentity="UDP HTTP Input.CatchTerminal">
           <eventXMLDoc xmi:type="mbmonitor:MonitorEvent">
             <globalTransactionCorrelator/>
             <parentTransactionCorrelator/>
             <localTransactionCorrelator/>
             <bitStreamData encoding="base64Binary"/>
-            <eventName literal="HTTP Input.CatchTerminal"/>
+            <eventName literal="UDP HTTP Input.CatchTerminal"/>
             <eventFilter dataLocation="true()" isXPath="true"/>
           </eventXMLDoc>
         </monitorEvents>

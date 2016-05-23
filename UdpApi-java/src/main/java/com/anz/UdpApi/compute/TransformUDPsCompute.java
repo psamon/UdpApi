@@ -1,18 +1,16 @@
-/**
- * 
- */
 package com.anz.UdpApi.compute;
 
-import com.anz.UdpApi.transform.PreTransformBLSample;
 import com.anz.UdpApi.transform.TransformUDPs;
 import com.anz.common.compute.impl.CommonBlobTransformCompute;
 import com.anz.common.transform.ITransformer;
 
+
+
 /**
- * @author sanketsw
+ * @author psamon
  *
  */
-public class RequestTransformCompute extends CommonBlobTransformCompute {
+public class TransformUDPsCompute extends CommonBlobTransformCompute {
 
 	/* (non-Javadoc)
 	 * @see com.anz.common.compute.impl.CommonJsonJsonTransformCompute#getTransformer()
@@ -24,3 +22,5 @@ public class RequestTransformCompute extends CommonBlobTransformCompute {
 
 
 }
+	
+

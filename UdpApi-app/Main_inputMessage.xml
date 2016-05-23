@@ -4,6 +4,6 @@
         <plainText></plainText>
     </InputMessage>
     <InputMessage timestamp="1462100885109" nodeId="FCMComposite_1_3" name="PassMessage" id="1462100885109-6">
-        <plainText>%7B+%22left%22+%3A+5%2C+%22right%22+%3A+7%7D</plainText>
+        <plainText>%09%7B%09%0A%09%22integrationNode%22+%3A+%22TESTNODE_root%22%2C%0A%09%22integrationServer%22+%3A+%22default%22%2C%0A%09%22application%22+%3A+%22HttpToHttp%22%2C%0A%09%22messageflow%22+%3A+%0A%09%09%7B%0A%09%09%22flowName%22+%3A+%22Main%22%2C%0A%09%09%22flowUDPs%22+%3A+%5B%0A%09%09%09%7B%0A%09%09%09%22ALERT%22+%3A+%22TRUE%22%0A%09%09%09%7D%0A%09%09%09%5D%0A%09%09%7D%0A%09%7D</plainText>
     </InputMessage>
 </MessagePool>

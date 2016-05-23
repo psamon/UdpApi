@@ -41,5 +41,18 @@ public class Data {
 	public void setSubflows(List<Flow> subflows) {
 		this.subflows = subflows;
 	} 
+	
+	public String toString(){
+		
+		
+		String data = "\n" + integrationNode + "\n" + integrationServer + "\n" + application + "\n" + messageFlow.getFlowName() + "\n";
+		for(FlowUDP udp: messageFlow.getFlowUDPs()){
+			
+			data = data + "......... " + udp.getName() + " = " + udp.getValue() + "\n";	
+					
+		}
+		
+		return data;
+	}
 
 }
