@@ -28,6 +28,7 @@ import com.ibm.broker.config.proxy.ApplicationProxy;
 import com.ibm.broker.config.proxy.BrokerProxy;
 import com.ibm.broker.config.proxy.ExecutionGroupProxy;
 import com.ibm.broker.config.proxy.FlowProxy;
+import com.ibm.broker.config.proxy.SubFlowProxy;
 
 
 /**
@@ -98,13 +99,13 @@ public class TransformUDPs implements ITransformer<String, String> {
 		if(json.getSubflows() != null){
 			
 			// Create list of subflow proxies
-			List<FlowProxy> subflowProxies = new ArrayList<FlowProxy>(json.getSubflows().size());
+			List<SubFlowProxy> subflowProxies = new ArrayList<SubFlowProxy>(json.getSubflows().size());
 						
 			// For each subflow
 			for(Flow flow: json.getSubflows()){
 							
 				// Create subflow proxy
-				FlowProxy newFlowProxy = applicationProxy.getSubFlowByName(flow.getFlowName());
+				SubFlowProxy newSubFlowProxy = applicationProxy.getSubFlowByName(flow.getFlowName());
 							
 				// If UDPs list is not empty get UDPs
 				if(flow.getFlowUDPs() != null){
@@ -113,11 +114,11 @@ public class TransformUDPs implements ITransformer<String, String> {
 					for(FlowUDP udp: flow.getFlowUDPs()){
 								
 						// Change UDP value
-						newFlowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
+						newSubFlowProxy.setUserDefinedProperty(udp.getName(), udp.getValue());
 								
 					}
 							
-					subflowProxies.add(newFlowProxy);
+					subflowProxies.add(newSubFlowProxy);
 							
 				} else {
 					
